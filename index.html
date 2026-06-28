@@ -147,6 +147,21 @@
   .cta-band p{color:var(--muted);font-size:17px;margin-bottom:24px}
   .cta-band .hero-cta{justify-content:center}
 
+  /* PRICING */
+  .pricing{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:860px;margin:0 auto;align-items:stretch}
+  @media(max-width:760px){.pricing{grid-template-columns:1fr}}
+  .plan{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 28px;display:flex;flex-direction:column}
+  .plan.pro{border:2px solid var(--brand);box-shadow:var(--shadow);position:relative}
+  .plan .badge{position:absolute;top:-13px;right:24px;background:var(--grad);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.03em;padding:5px 13px;border-radius:999px}
+  .plan .pname{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .plan .price{font-size:40px;font-weight:850;letter-spacing:-.03em;margin:8px 0 2px}
+  .plan .price small{font-size:15px;font-weight:600;color:var(--muted)}
+  .plan .note{font-size:13px;color:var(--muted);margin-bottom:20px}
+  .plan ul{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:12px}
+  .plan li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px}
+  .plan li .ck{width:20px;height:20px;border-radius:6px;background:var(--soft);color:var(--brand);flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+  .plan .btn{justify-content:center;margin-top:auto;width:100%}
+
   /* FOOTER */
   footer{border-top:1px solid var(--line);padding:50px 0 40px;margin-top:30px}
   .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
@@ -170,6 +185,7 @@
       <a href="#features">Features</a>
       <a href="#platforms">Platforms</a>
       <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta">
@@ -272,14 +288,53 @@
 <!-- FORMATS -->
 <section class="s">
   <div class="wrap">
-    <div class="head"><span class="eyebrow">Output</span><h2>Clean Markdown today — more formats on the way.</h2><p>Markdown is the universal format that pastes perfectly into your favourite tools. Richer exports are coming to Pro.</p></div>
+    <div class="head"><span class="eyebrow">Output</span><h2>Export to anywhere you work.</h2><p>Markdown and clipboard are free forever. Pro unlocks rich formats and integrations — so your chats land exactly where you need them.</p></div>
     <div class="fmts">
-      <span class="fmt">Markdown <span class="tag live">Available</span></span>
-      <span class="fmt">Copy to clipboard <span class="tag live">Available</span></span>
-      <span class="fmt">PDF <span class="tag soon">Pro · soon</span></span>
-      <span class="fmt">Word (.docx) <span class="tag soon">Pro · soon</span></span>
-      <span class="fmt">Notion sync <span class="tag soon">Pro · soon</span></span>
-      <span class="fmt">Obsidian <span class="tag soon">Pro · soon</span></span>
+      <span class="fmt">Markdown <span class="tag live">Free</span></span>
+      <span class="fmt">Copy to clipboard <span class="tag live">Free</span></span>
+      <span class="fmt">PDF <span class="tag soon">Pro</span></span>
+      <span class="fmt">Word (.docx) <span class="tag soon">Pro</span></span>
+      <span class="fmt">Notion <span class="tag soon">Pro</span></span>
+      <span class="fmt">Obsidian <span class="tag soon">Pro</span></span>
+      <span class="fmt">Google Drive <span class="tag soon">Pro</span></span>
+      <span class="fmt">Bulk export <span class="tag soon">Pro</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="s" id="pricing" style="background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Pricing</span><h2>Start free. Upgrade when you need more.</h2><p>Saving your chats to Markdown is free forever. Pro adds rich formats and power-user tools — a one-time payment, no subscription.</p></div>
+    <div class="pricing">
+      <div class="plan">
+        <div class="pname">Free</div>
+        <div class="price">$0</div>
+        <div class="note">Everything you need to save your chats.</div>
+        <ul>
+          <li><span class="ck">✓</span> All 12+ AI platforms</li>
+          <li><span class="ck">✓</span> Markdown export + copy to clipboard</li>
+          <li><span class="ck">✓</span> Selective export — pick the turns</li>
+          <li><span class="ck">✓</span> Include the model's reasoning</li>
+          <li><span class="ck">✓</span> Self-correcting reliability</li>
+        </ul>
+        <a class="btn btn-ghost" href="#install">Add to Chrome — free</a>
+      </div>
+      <div class="plan pro">
+        <span class="badge">Most popular</span>
+        <div class="pname">Pro</div>
+        <div class="price">$19 <small>one-time</small></div>
+        <div class="note">Lifetime license · launching soon</div>
+        <ul>
+          <li><span class="ck">✓</span> Everything in Free</li>
+          <li><span class="ck">✓</span> Export to PDF &amp; Word (.docx)</li>
+          <li><span class="ck">✓</span> Sync to Notion &amp; Obsidian</li>
+          <li><span class="ck">✓</span> Back up to Google Drive</li>
+          <li><span class="ck">✓</span> Bulk / batch export</li>
+          <li><span class="ck">✓</span> Priority support</li>
+        </ul>
+        <a class="btn btn-primary" href="#" id="cta-pro">Get Pro</a>
+      </div>
     </div>
   </div>
 </section>
@@ -306,13 +361,13 @@
 </section>
 
 <!-- FAQ -->
-<section class="s" id="faq" style="background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<section class="s" id="faq">
   <div class="wrap">
     <div class="head"><span class="eyebrow">FAQ</span><h2>Questions, answered.</h2></div>
     <div class="faq">
       <details open><summary>What is AI Chat Exporter? <span class="pm">+</span></summary><p>A free browser extension that saves your AI chat conversations as clean, well-formatted Markdown. Open a chat, click the icon, and copy or download the whole thing — with headings, lists, tables, code blocks and even the model's reasoning preserved.</p></details>
       <details><summary>Which AI platforms are supported? <span class="pm">+</span></summary><p>12+ today: ChatGPT, Claude, Gemini, DeepSeek, Grok, Perplexity, Microsoft Copilot, Mistral (Le Chat), Qwen, z.ai / GLM, Kimi and Duck.ai — with more added regularly.</p></details>
-      <details><summary>Is it free? <span class="pm">+</span></summary><p>Yes. Exporting to Markdown and copying to your clipboard is completely free, with no account. Richer formats (PDF, Word, Notion, Obsidian) are coming as an optional Pro upgrade later.</p></details>
+      <details><summary>Is it free? <span class="pm">+</span></summary><p>Yes — exporting to Markdown and copying to your clipboard is free forever, with no account. An optional one-time <strong>Pro</strong> upgrade adds PDF and Word export, Notion and Obsidian sync, Google Drive backup and bulk export.</p></details>
       <details><summary>Is my data private? <span class="pm">+</span></summary><p>Completely. Everything runs locally in your browser — there is no server, no account and no tracking, and we collect zero conversation data. The only network request is a small public config file that helps the exporter keep working when sites change; it contains none of your information.</p></details>
       <details><summary>Can I export only part of a conversation? <span class="pm">+</span></summary><p>Yes. Open "Select messages" in the popup and tick exactly the turns you want — or export the whole conversation in one click.</p></details>
       <details><summary>Does it capture the model's reasoning? <span class="pm">+</span></summary><p>When a platform exposes the model's "thinking", you can include it in your export with a single toggle — or leave it out. It's off by default.</p></details>
@@ -351,6 +406,7 @@
         <a href="#features">Features</a>
         <a href="#platforms">Platforms</a>
         <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
       </div>
       <div>
