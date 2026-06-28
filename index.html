@@ -161,6 +161,9 @@
   .plan li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px}
   .plan li .ck{width:20px;height:20px;border-radius:6px;background:var(--soft);color:var(--brand);flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
   .plan .btn{justify-content:center;margin-top:auto;width:100%}
+  .support{max-width:860px;margin:18px auto 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .support span{color:var(--muted);font-size:14.5px}
+  .support .btn{flex:none}
 
   /* FOOTER */
   footer{border-top:1px solid var(--line);padding:50px 0 40px;margin-top:30px}
@@ -185,7 +188,9 @@
       "url":"https://aix.adsit.work/",
       "offers":[
         {"@type":"Offer","price":"0","priceCurrency":"USD","name":"Free"},
-        {"@type":"Offer","price":"19","priceCurrency":"USD","name":"Pro (lifetime)"}
+        {"@type":"Offer","price":"3.99","priceCurrency":"USD","name":"Pro Monthly"},
+        {"@type":"Offer","price":"24","priceCurrency":"USD","name":"Pro Annual"},
+        {"@type":"Offer","price":"59","priceCurrency":"USD","name":"Pro Lifetime"}
       ],
       "featureList":["Export AI chats to Markdown","12+ AI platforms","Selective export","Reasoning capture","100% local and private","PDF, Word, Notion, Obsidian export (Pro)"],
       "publisher":{"@type":"Organization","name":"AI Chat Exporter","email":"support@adsit.work","url":"https://aix.adsit.work/"}
@@ -353,8 +358,8 @@
       <div class="plan pro">
         <span class="badge">Most popular</span>
         <div class="pname">Pro</div>
-        <div class="price">$19 <small>one-time</small></div>
-        <div class="note">Lifetime license · launching soon</div>
+        <div class="price">$24 <small>/ year</small></div>
+        <div class="note">≈ $2/mo, billed yearly · also $3.99/mo or $59 lifetime · launching soon</div>
         <ul>
           <li><span class="ck">✓</span> Everything in Free</li>
           <li><span class="ck">✓</span> Export to PDF &amp; Word (.docx)</li>
@@ -365,6 +370,10 @@
         </ul>
         <a class="btn btn-primary" href="#" id="cta-pro">Get Pro</a>
       </div>
+    </div>
+    <div class="support">
+      <div><strong>Enjoying the free version?</strong> <span>Support development with a one-time tip — pay what you like. ☕</span></div>
+      <a class="btn btn-ghost" href="#" id="cta-support">Support the dev</a>
     </div>
   </div>
 </section>
@@ -397,7 +406,7 @@
     <div class="faq">
       <details open><summary>What is AI Chat Exporter? <span class="pm">+</span></summary><p>A free browser extension that saves your AI chat conversations as clean, well-formatted Markdown. Open a chat, click the icon, and copy or download the whole thing — with headings, lists, tables, code blocks and even the model's reasoning preserved.</p></details>
       <details><summary>Which AI platforms are supported? <span class="pm">+</span></summary><p>12+ today: ChatGPT, Claude, Gemini, DeepSeek, Grok, Perplexity, Microsoft Copilot, Mistral (Le Chat), Qwen, z.ai / GLM, Kimi and Duck.ai — with more added regularly.</p></details>
-      <details><summary>Is it free? <span class="pm">+</span></summary><p>Yes — exporting to Markdown and copying to your clipboard is free forever, with no account. An optional one-time <strong>Pro</strong> upgrade adds PDF and Word export, Notion and Obsidian sync, Google Drive backup and bulk export.</p></details>
+      <details><summary>Is it free? <span class="pm">+</span></summary><p>Yes — exporting to Markdown and copying to your clipboard is free forever, with no account. An optional <strong>Pro</strong> plan — monthly, annual, or a one-time lifetime license — adds PDF and Word export, Notion and Obsidian sync, Google Drive backup and bulk export. You can also support development with a one-time tip.</p></details>
       <details><summary>Is my data private? <span class="pm">+</span></summary><p>Completely. Everything runs locally in your browser — there is no server, no account and no tracking, and we collect zero conversation data. The only network request is a small public config file that helps the exporter keep working when sites change; it contains none of your information.</p></details>
       <details><summary>Can I export only part of a conversation? <span class="pm">+</span></summary><p>Yes. Open "Select messages" in the popup and tick exactly the turns you want — or export the whole conversation in one click.</p></details>
       <details><summary>Does it capture the model's reasoning? <span class="pm">+</span></summary><p>When a platform exposes the model's "thinking", you can include it in your export with a single toggle — or leave it out. It's off by default.</p></details>
