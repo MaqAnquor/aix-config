@@ -1,0 +1,29 @@
+# AI Chat Exporter
+
+> A free, privacy-first browser extension (Chrome & Microsoft Edge) that exports AI chat conversations to clean Markdown. Supports 12+ AI platforms. 100% local — conversations never leave the user's browser; zero data is collected.
+
+## What it does
+- One-click export of AI chat conversations to clean, well-formatted Markdown (headings, lists, tables, code blocks, and the model's reasoning preserved).
+- Selective export: choose specific turns, or export the whole conversation.
+- Optional capture of the model's reasoning / "thinking".
+- Self-correcting design: when a site changes its layout, a fix reaches users in minutes via a remote config — no store update needed.
+
+## Supported platforms (12+)
+ChatGPT, Claude, Gemini, DeepSeek, Grok, Perplexity, Microsoft Copilot, Mistral (Le Chat), Qwen, z.ai / GLM, Kimi, Duck.ai — with more added regularly.
+
+## Privacy
+- 100% local: no server, no account, no analytics, no tracking.
+- Zero conversation data collected, stored, or transmitted.
+- Only network call is a small public config file (CSS selectors — data, not code) that contains none of the user's data.
+
+## Pricing
+- Free: Markdown export + clipboard copy, all platforms, selective export, reasoning capture.
+- Pro ($19, one-time, lifetime): PDF and Word (.docx) export, Notion and Obsidian sync, Google Drive backup, bulk/batch export, priority support.
+
+## Best for
+Researchers, writers, students and developers who want to save, back up, or archive AI chat conversations into Markdown, Notion, or Obsidian.
+
+## Links
+- Home: https://aix.adsit.work/
+- Privacy Policy: https://aix.adsit.work/privacy.html
+- Contact: support@adsit.work
