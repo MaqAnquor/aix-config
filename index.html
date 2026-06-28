@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Chat Exporter — Export ChatGPT, Claude, Gemini & more to clean Markdown</title>
+<meta name="description" content="One-click export of your AI chats from ChatGPT, Claude, Gemini, DeepSeek, Grok, Perplexity, Copilot, Mistral, Qwen and more to clean Markdown. Privacy-first: nothing leaves your browser.">
+<style>
+  :root{--violet:#5B54E0;--ink:#15131f;--muted:#6b6880;--bg:#ffffff;--card:#f6f5ff;--line:#e7e5f5}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  header{padding:64px 0 28px;text-align:center}
+  .logo{width:64px;height:64px;border-radius:16px;background:var(--violet);display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .logo svg{width:34px;height:34px}
+  h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:.2em 0}
+  .tag{font-size:clamp(17px,2.4vw,20px);color:var(--muted);max-width:620px;margin:0 auto 26px}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+  .btn{display:inline-block;padding:13px 22px;border-radius:11px;font-weight:600;text-decoration:none;border:1px solid var(--line)}
+  .btn.primary{background:var(--violet);color:#fff;border-color:var(--violet)}
+  .btn.ghost{background:#fff;color:var(--ink)}
+  .note{color:var(--muted);font-size:13px;text-align:center;margin-top:6px}
+  section{padding:30px 0;border-top:1px solid var(--line)}
+  h2{font-size:22px;margin:0 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .feat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .feat h3{margin:0 0 6px;font-size:16px}
+  .feat p{margin:0;color:var(--muted);font-size:14px}
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:500}
+  footer{padding:34px 0 56px;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+  footer a{color:var(--violet)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="2" fill="#fff"/><rect x="9" y="8" width="6" height="1.6" rx=".8" fill="#5B54E0"/><rect x="9" y="11.2" width="6" height="1.6" rx=".8" fill="#5B54E0"/><rect x="9" y="14.4" width="4" height="1.6" rx=".8" fill="#5B54E0"/></svg>
+    </div>
+    <h1>Export your AI chats to clean Markdown</h1>
+    <p class="tag">One click turns a ChatGPT, Claude, Gemini, DeepSeek, Grok or Perplexity conversation into a tidy Markdown file. Broadest coverage. Reliable. <strong>Privacy-first.</strong></p>
+    <div class="cta">
+      <a class="btn primary" href="#" id="chrome-link">Add to Chrome</a>
+      <a class="btn ghost" href="#" id="edge-link">Add to Edge</a>
+    </div>
+    <p class="note">Free. No account. Your conversations never leave your browser.</p>
+  </header>
+
+  <section>
+    <h2>Why it's different</h2>
+    <div class="grid">
+      <div class="feat"><h3>Broadest coverage</h3><p>12+ AI chat services supported, with more added regularly — not just the big two.</p></div>
+      <div class="feat"><h3>Never breaks</h3><p>Self-correcting design: when a site changes its layout, a fix reaches you in minutes — no waiting for a store update.</p></div>
+      <div class="feat"><h3>High-fidelity output</h3><p>Headings, lists, tables, code blocks and the model's reasoning — preserved, not flattened.</p></div>
+      <div class="feat"><h3>Truly private</h3><p>Everything happens on your device. No server, no account, no analytics, no tracking. Zero data collected.</p></div>
+      <div class="feat"><h3>Pick what you export</h3><p>Export the whole conversation or tick just the turns you want.</p></div>
+      <div class="feat"><h3>Reasoning, optional</h3><p>Toggle the model's thinking on or off in your export.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Works with</h2>
+    <div class="pills">
+      <span class="pill">ChatGPT</span><span class="pill">Claude</span><span class="pill">Gemini</span>
+      <span class="pill">DeepSeek</span><span class="pill">Grok</span><span class="pill">Perplexity</span>
+      <span class="pill">Copilot</span><span class="pill">Mistral</span><span class="pill">Qwen</span>
+      <span class="pill">z.ai / GLM</span><span class="pill">Kimi</span><span class="pill">Duck.ai</span>
+      <span class="pill">…and more</span>
+    </div>
+  </section>
+
+  <footer>
+    <p><a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="mailto:support@adslt.work">support@adslt.work</a></p>
+    <p>AI Chat Exporter is an independent tool, not affiliated with OpenAI, Anthropic, Google, Microsoft, xAI, Perplexity, Mistral AI, Alibaba, Moonshot AI, Z.ai, Meta or DuckDuckGo. Product names are used only to identify the services this tool can export from.</p>
+  </footer>
+</div>
+</body>
+</html>

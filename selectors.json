@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "updatedAt": "2026-06-28",
+  "note": "HOT-FIX selector overrides. This is the source of truth; it is published to the public config endpoint (see docs/DEPLOYMENT.md). When a platform changes its site, edit that platform's selectors here, publish, and every installed extension picks it up within minutes — NO Chrome/Edge store review. Merged OVER the bundled config/selectors.js (remote wins per field). Only existing platform ids are honored (new platforms need a code release).",
+  "platforms": {}
+}
