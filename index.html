@@ -3,77 +3,372 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Chat Exporter — Export ChatGPT, Claude, Gemini & more to clean Markdown</title>
-<meta name="description" content="One-click export of your AI chats from ChatGPT, Claude, Gemini, DeepSeek, Grok, Perplexity, Copilot, Mistral, Qwen and more to clean Markdown. Privacy-first: nothing leaves your browser.">
+<title>AI Chat Exporter — Save ChatGPT, Claude, Gemini & more to clean Markdown</title>
+<meta name="description" content="Free Chrome & Edge extension to export your AI chats from ChatGPT, Claude, Gemini, DeepSeek, Grok, Perplexity and more to clean Markdown. Broadest coverage, high-fidelity output, 100% private — nothing leaves your browser.">
+<meta property="og:title" content="AI Chat Exporter — export your AI chats to clean Markdown">
+<meta property="og:description" content="One click saves any AI conversation as tidy Markdown. 12+ platforms. 100% private — nothing leaves your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aix.adsit.work/">
 <style>
-  :root{--violet:#5B54E0;--ink:#15131f;--muted:#6b6880;--bg:#ffffff;--card:#f6f5ff;--line:#e7e5f5}
-  *{box-sizing:border-box}
-  body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
-  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
-  header{padding:64px 0 28px;text-align:center}
-  .logo{width:64px;height:64px;border-radius:16px;background:var(--violet);display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px}
-  .logo svg{width:34px;height:34px}
-  h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:.2em 0}
-  .tag{font-size:clamp(17px,2.4vw,20px);color:var(--muted);max-width:620px;margin:0 auto 26px}
-  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
-  .btn{display:inline-block;padding:13px 22px;border-radius:11px;font-weight:600;text-decoration:none;border:1px solid var(--line)}
-  .btn.primary{background:var(--violet);color:#fff;border-color:var(--violet)}
-  .btn.ghost{background:#fff;color:var(--ink)}
-  .note{color:var(--muted);font-size:13px;text-align:center;margin-top:6px}
-  section{padding:30px 0;border-top:1px solid var(--line)}
-  h2{font-size:22px;margin:0 0 16px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-  .feat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-  .feat h3{margin:0 0 6px;font-size:16px}
-  .feat p{margin:0;color:var(--muted);font-size:14px}
-  .pills{display:flex;flex-wrap:wrap;gap:8px}
-  .pill{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:500}
-  footer{padding:34px 0 56px;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
-  footer a{color:var(--violet)}
+  :root{
+    --brand:#5B54E0; --brand-2:#8B5CF6; --brand-3:#6366F1;
+    --ink:#14121d; --muted:#605d72; --bg:#ffffff; --soft:#f7f6ff;
+    --soft-2:#f1f0fb; --line:#e8e6f6; --ok:#16a34a;
+    --grad:linear-gradient(135deg,#6D5EF0 0%,#8B5CF6 55%,#A855F7 100%);
+    --shadow:0 10px 30px -12px rgba(60,40,160,.25);
+    --shadow-lg:0 30px 60px -20px rgba(60,40,160,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--brand);background:var(--soft);border:1px solid var(--line);padding:6px 13px;border-radius:999px}
+  h1,h2,h3{letter-spacing:-.022em;line-height:1.1}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;font-weight:650;font-size:15px;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+  .btn svg{width:18px;height:18px}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:var(--shadow)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{transform:translateY(-2px);border-color:#cfc9f0}
+
+  /* NAV */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+  .brand .mark{width:30px;height:30px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center}
+  .brand .mark svg{width:17px;height:17px}
+  .nav-links{display:flex;align-items:center;gap:28px;font-size:14.5px;font-weight:550;color:var(--muted)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:flex;align-items:center;gap:12px}
+  @media(max-width:780px){.nav-links{display:none}.nav-cta .btn-ghost{display:none}}
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;padding:78px 0 70px}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(60% 50% at 78% 8%,rgba(168,85,247,.16),transparent 60%),
+    radial-gradient(55% 45% at 12% 0%,rgba(99,102,241,.14),transparent 60%);z-index:-1}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5.4vw,54px);font-weight:850;margin:18px 0 16px}
+  .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{font-size:18px;color:var(--muted);max-width:560px;margin-bottom:26px}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  .trust{display:flex;align-items:center;gap:16px;font-size:13.5px;color:var(--muted);flex-wrap:wrap}
+  .trust b{color:var(--ink)}
+  .dot{width:5px;height:5px;border-radius:50%;background:#cdc8ec}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:38px}.hero-art{order:-1}}
+
+  /* POPUP MOCKUP */
+  .hero-art{display:flex;justify-content:center}
+  .popup{width:330px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;transform:rotate(.5deg)}
+  .popup .top{display:flex;align-items:center;gap:9px;padding:15px 17px;border-bottom:1px solid var(--soft-2)}
+  .popup .top .mk{width:26px;height:26px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center}
+  .popup .top .mk svg{width:15px;height:15px}
+  .popup .top b{font-size:14.5px}
+  .popup .body{padding:15px 17px}
+  .found{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:14px}
+  .found .pl{display:inline-flex;align-items:center;gap:6px;font-weight:650;color:var(--ink)}
+  .found .pl i{width:9px;height:9px;border-radius:50%;background:#D97757;display:inline-block}
+  .opt{display:flex;align-items:center;justify-content:space-between;font-size:13.5px;padding:9px 11px;background:var(--soft);border:1px solid var(--line);border-radius:10px;margin-bottom:9px}
+  .sw{width:34px;height:20px;border-radius:999px;background:var(--brand);position:relative;flex:none}
+  .sw::after{content:"";position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff}
+  .rows{margin:6px 0 14px}
+  .row{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted);padding:6px 2px}
+  .cb{width:15px;height:15px;border-radius:4px;border:1.5px solid var(--brand);flex:none;display:flex;align-items:center;justify-content:center}
+  .cb.on{background:var(--brand)}
+  .cb.on svg{width:10px;height:10px}
+  .pbtns{display:flex;gap:9px}
+  .pbtns .b{flex:1;text-align:center;font-size:13px;font-weight:650;padding:10px;border-radius:10px}
+  .pbtns .b1{background:var(--grad);color:#fff}
+  .pbtns .b2{background:#fff;border:1px solid var(--line);color:var(--ink)}
+
+  /* STRIP */
+  .strip{padding:30px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--soft)}
+  .strip .lab{text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14px;font-weight:600}
+  .chip i{width:18px;height:18px;border-radius:6px;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+  /* SECTIONS */
+  section.s{padding:80px 0}
+  .head{text-align:center;max-width:640px;margin:0 auto 46px}
+  .head h2{font-size:clamp(27px,3.6vw,38px);font-weight:820;margin:14px 0 12px}
+  .head p{font-size:17px;color:var(--muted)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:820px){.grid3{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;transition:transform .15s ease,box-shadow .15s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .ic{width:44px;height:44px;border-radius:12px;background:var(--soft);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:15px;color:var(--brand)}
+  .ic svg{width:23px;height:23px}
+  .card h3{font-size:17.5px;font-weight:720;margin-bottom:7px}
+  .card p{font-size:14.5px;color:var(--muted)}
+
+  /* STEPS */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:st}
+  @media(max-width:820px){.steps{grid-template-columns:1fr}}
+  .step{position:relative;background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:28px 24px}
+  .step .n{counter-increment:st;width:36px;height:36px;border-radius:10px;background:var(--grad);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .step .n::before{content:counter(st)}
+  .step h3{font-size:17px;font-weight:720;margin-bottom:6px}
+  .step p{font-size:14.5px;color:var(--muted)}
+
+  /* FORMATS */
+  .fmts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+  .fmt{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:12px 18px;font-weight:650;font-size:14.5px;background:#fff}
+  .fmt .tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+  .fmt .live{background:#e7f8ee;color:var(--ok)}
+  .fmt .soon{background:var(--soft-2);color:var(--brand)}
+
+  /* PRIVACY BAND */
+  .privacy{background:#15122a;color:#fff;border-radius:26px;padding:54px 44px;position:relative;overflow:hidden}
+  .privacy::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 80% at 85% 20%,rgba(168,85,247,.30),transparent 60%);}
+  .privacy .in{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center}
+  @media(max-width:820px){.privacy{padding:40px 26px}.privacy .in{grid-template-columns:1fr;gap:24px}}
+  .privacy h2{font-size:clamp(26px,3.4vw,34px);font-weight:820;margin-bottom:12px}
+  .privacy p{color:#c9c4e6;font-size:16px}
+  .plist{list-style:none;display:grid;gap:13px}
+  .plist li{display:flex;align-items:flex-start;gap:11px;font-size:15px;color:#eceaf7}
+  .plist .ck{width:22px;height:22px;border-radius:7px;background:rgba(168,85,247,.22);color:#c9a8ff;flex:none;display:flex;align-items:center;justify-content:center}
+  .plist .ck svg{width:13px;height:13px}
+
+  /* FAQ */
+  .faq{max-width:760px;margin:0 auto}
+  details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px 20px;margin-bottom:12px}
+  details[open]{box-shadow:var(--shadow);border-color:#dcd7f3}
+  summary{list-style:none;cursor:pointer;font-weight:680;font-size:16px;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary .pm{width:22px;height:22px;flex:none;border-radius:6px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--brand);font-weight:800;transition:transform .2s}
+  details[open] summary .pm{transform:rotate(45deg)}
+  details p{padding:0 0 18px;color:var(--muted);font-size:15px}
+
+  /* CTA */
+  .cta-band{text-align:center;background:var(--soft);border:1px solid var(--line);border-radius:26px;padding:56px 32px}
+  .cta-band h2{font-size:clamp(26px,3.6vw,36px);font-weight:830;margin-bottom:12px}
+  .cta-band p{color:var(--muted);font-size:17px;margin-bottom:24px}
+  .cta-band .hero-cta{justify-content:center}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);padding:50px 0 40px;margin-top:30px}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+  @media(max-width:820px){.foot-grid{grid-template-columns:1fr 1fr}}
+  .foot-grid h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:14px;font-weight:700}
+  .foot-grid a{display:block;color:var(--ink);font-size:14.5px;margin-bottom:10px;opacity:.85}
+  .foot-grid a:hover{opacity:1;color:var(--brand)}
+  .foot-about{max-width:300px;color:var(--muted);font-size:14px}
+  .foot-bottom{margin-top:36px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.7}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="logo" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="2" fill="#fff"/><rect x="9" y="8" width="6" height="1.6" rx=".8" fill="#5B54E0"/><rect x="9" y="11.2" width="6" height="1.6" rx=".8" fill="#5B54E0"/><rect x="9" y="14.4" width="4" height="1.6" rx=".8" fill="#5B54E0"/></svg>
-    </div>
-    <h1>Export your AI chats to clean Markdown</h1>
-    <p class="tag">One click turns a ChatGPT, Claude, Gemini, DeepSeek, Grok or Perplexity conversation into a tidy Markdown file. Broadest coverage. Reliable. <strong>Privacy-first.</strong></p>
-    <div class="cta">
-      <a class="btn primary" href="#" id="chrome-link">Add to Chrome</a>
-      <a class="btn ghost" href="#" id="edge-link">Add to Edge</a>
-    </div>
-    <p class="note">Free. No account. Your conversations never leave your browser.</p>
-  </header>
 
-  <section>
-    <h2>Why it's different</h2>
-    <div class="grid">
-      <div class="feat"><h3>Broadest coverage</h3><p>12+ AI chat services supported, with more added regularly — not just the big two.</p></div>
-      <div class="feat"><h3>Never breaks</h3><p>Self-correcting design: when a site changes its layout, a fix reaches you in minutes — no waiting for a store update.</p></div>
-      <div class="feat"><h3>High-fidelity output</h3><p>Headings, lists, tables, code blocks and the model's reasoning — preserved, not flattened.</p></div>
-      <div class="feat"><h3>Truly private</h3><p>Everything happens on your device. No server, no account, no analytics, no tracking. Zero data collected.</p></div>
-      <div class="feat"><h3>Pick what you export</h3><p>Export the whole conversation or tick just the turns you want.</p></div>
-      <div class="feat"><h3>Reasoning, optional</h3><p>Toggle the model's thinking on or off in your export.</p></div>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="2" fill="#fff"/><rect x="9" y="8" width="6" height="1.6" rx=".8" fill="#7C6BF0"/><rect x="9" y="11.2" width="6" height="1.6" rx=".8" fill="#7C6BF0"/><rect x="9" y="14.4" width="4" height="1.6" rx=".8" fill="#7C6BF0"/></svg></span>
+      AI Chat Exporter
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#platforms">Platforms</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" id="cta-nav" href="#install">Add to Chrome</a>
     </div>
-  </section>
+  </div>
+</header>
 
-  <section>
-    <h2>Works with</h2>
-    <div class="pills">
-      <span class="pill">ChatGPT</span><span class="pill">Claude</span><span class="pill">Gemini</span>
-      <span class="pill">DeepSeek</span><span class="pill">Grok</span><span class="pill">Perplexity</span>
-      <span class="pill">Copilot</span><span class="pill">Mistral</span><span class="pill">Qwen</span>
-      <span class="pill">z.ai / GLM</span><span class="pill">Kimi</span><span class="pill">Duck.ai</span>
-      <span class="pill">…and more</span>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Free · Chrome &amp; Edge</span>
+      <h1>Save your AI chats as <span class="g">clean Markdown</span>, in one click.</h1>
+      <p class="sub">Export conversations from ChatGPT, Claude, Gemini, DeepSeek, Grok, Perplexity and 6 more — with code, tables and reasoning preserved. Broadest coverage, and <b>100% private</b>: nothing ever leaves your browser.</p>
+      <div class="hero-cta" id="install">
+        <a class="btn btn-primary" href="#" id="cta-chrome">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4" fill="#fff"/><path d="M12 2a10 10 0 0 1 8.66 5H12a5 5 0 0 0-4.33 2.5L3.34 7A10 10 0 0 1 12 2z" opacity=".9"/></svg>
+          Add to Chrome
+        </a>
+        <a class="btn btn-ghost" href="#" id="cta-edge">Add to Edge</a>
+      </div>
+      <div class="trust">
+        <span><b>12+</b> AI platforms</span><span class="dot"></span>
+        <span><b>Zero</b> data collected</span><span class="dot"></span>
+        <span>No account needed</span>
+      </div>
     </div>
-  </section>
+    <div class="hero-art">
+      <div class="popup">
+        <div class="top"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="2" fill="#fff"/></svg></span><b>AI Chat Exporter</b></div>
+        <div class="body">
+          <div class="found"><span class="pl"><i></i> Claude</span> — 16 messages found</div>
+          <div class="opt"><span>Include reasoning</span><span class="sw"></span></div>
+          <div class="opt" style="background:#fff"><span>Select messages ▾</span><span style="color:var(--muted);font-size:12px">12 of 16</span></div>
+          <div class="rows">
+            <div class="row"><span class="cb on"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span> How do I structure a cover letter?</div>
+            <div class="row"><span class="cb on"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span> Can you make it more concise?</div>
+            <div class="row"><span class="cb"></span> Add a closing paragraph</div>
+          </div>
+          <div class="pbtns"><span class="b b1">Copy Markdown</span><span class="b b2">Download .md</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    <p><a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="mailto:support@adsit.work">support@adsit.work</a></p>
-    <p>AI Chat Exporter is an independent tool, not affiliated with OpenAI, Anthropic, Google, Microsoft, xAI, Perplexity, Mistral AI, Alibaba, Moonshot AI, Z.ai, Meta or DuckDuckGo. Product names are used only to identify the services this tool can export from.</p>
-  </footer>
+<!-- PLATFORM STRIP -->
+<div class="strip" id="platforms">
+  <div class="wrap">
+    <div class="lab">Works with your favourite AI chats</div>
+    <div class="chips">
+      <span class="chip"><i style="background:#10A37F">G</i>ChatGPT</span>
+      <span class="chip"><i style="background:#D97757">C</i>Claude</span>
+      <span class="chip"><i style="background:#4285F4">G</i>Gemini</span>
+      <span class="chip"><i style="background:#4D6BFE">D</i>DeepSeek</span>
+      <span class="chip"><i style="background:#111">G</i>Grok</span>
+      <span class="chip"><i style="background:#20808D">P</i>Perplexity</span>
+      <span class="chip"><i style="background:#0078D4">C</i>Copilot</span>
+      <span class="chip"><i style="background:#FA520F">M</i>Mistral</span>
+      <span class="chip"><i style="background:#615CED">Q</i>Qwen</span>
+      <span class="chip"><i style="background:#7C3AED">Z</i>z.ai</span>
+      <span class="chip"><i style="background:#111">K</i>Kimi</span>
+      <span class="chip"><i style="background:#DE5833">D</i>Duck.ai</span>
+    </div>
+  </div>
 </div>
+
+<!-- FEATURES -->
+<section class="s" id="features">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Why it's better</span>
+      <h2>Built to be reliable, faithful, and private.</h2>
+      <p>Most exporters cover a handful of sites and quietly break when those sites change. This one is engineered for the opposite.</p>
+    </div>
+    <div class="grid3">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div><h3>Broadest coverage</h3><p>12+ AI chat services supported today — not just the big two — with more added regularly.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div><h3>Never breaks</h3><p>A self-correcting design: when a site changes its layout, the fix reaches you in minutes — no waiting for a store update.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h7"/></svg></div><h3>High-fidelity Markdown</h3><p>Headings, lists, tables and code blocks come through clean — ready to paste into Notion, Obsidian or GitHub.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></div><h3>100% private</h3><p>Everything runs on your device. No server, no account, no analytics. Zero data collected — ever.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3>Export exactly what you want</h3><p>Save the whole conversation, or tick just the turns you need. Selective export works on every platform.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a4 4 0 0 1 4 4c0 1.5-.8 2.3-1.5 3M12 3a4 4 0 0 0-4 4c0 1.5.8 2.3 1.5 3M9 14h6M10 18h4"/></svg></div><h3>Capture the reasoning</h3><p>Optionally include the model's "thinking" in your export — or leave it out. Your call, per export.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="s" id="how" style="background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">How it works</span><h2>Three clicks from chat to file.</h2></div>
+    <div class="steps">
+      <div class="step"><div class="n"></div><h3>Open any AI chat</h3><p>Go to a conversation on any supported platform — ChatGPT, Claude, Gemini and the rest.</p></div>
+      <div class="step"><div class="n"></div><h3>Click the icon</h3><p>Open the AI Chat Exporter popup. It instantly finds the conversation and counts the messages.</p></div>
+      <div class="step"><div class="n"></div><h3>Copy or download</h3><p>Grab clean Markdown to your clipboard, or download a tidy <code>.md</code> file. Done.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATS -->
+<section class="s">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Output</span><h2>Clean Markdown today — more formats on the way.</h2><p>Markdown is the universal format that pastes perfectly into your favourite tools. Richer exports are coming to Pro.</p></div>
+    <div class="fmts">
+      <span class="fmt">Markdown <span class="tag live">Available</span></span>
+      <span class="fmt">Copy to clipboard <span class="tag live">Available</span></span>
+      <span class="fmt">PDF <span class="tag soon">Pro · soon</span></span>
+      <span class="fmt">Word (.docx) <span class="tag soon">Pro · soon</span></span>
+      <span class="fmt">Notion sync <span class="tag soon">Pro · soon</span></span>
+      <span class="fmt">Obsidian <span class="tag soon">Pro · soon</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="s">
+  <div class="wrap">
+    <div class="privacy">
+      <div class="in">
+        <div>
+          <span class="eyebrow" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#d6c9ff">Privacy by design</span>
+          <h2 style="margin-top:14px">Your conversations never leave your browser.</h2>
+          <p>Other exporters upload your chats to "process" them. We don't — and we can't. There's no server to send anything to. The reading, the formatting, the file: all of it happens locally on your machine.</p>
+        </div>
+        <ul class="plist">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span> No server, no account, no sign-up</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span> No analytics, no tracking, no ads</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span> Zero conversation data collected or stored</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span> One tiny config download — contains none of your data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="s" id="faq" style="background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">FAQ</span><h2>Questions, answered.</h2></div>
+    <div class="faq">
+      <details open><summary>What is AI Chat Exporter? <span class="pm">+</span></summary><p>A free browser extension that saves your AI chat conversations as clean, well-formatted Markdown. Open a chat, click the icon, and copy or download the whole thing — with headings, lists, tables, code blocks and even the model's reasoning preserved.</p></details>
+      <details><summary>Which AI platforms are supported? <span class="pm">+</span></summary><p>12+ today: ChatGPT, Claude, Gemini, DeepSeek, Grok, Perplexity, Microsoft Copilot, Mistral (Le Chat), Qwen, z.ai / GLM, Kimi and Duck.ai — with more added regularly.</p></details>
+      <details><summary>Is it free? <span class="pm">+</span></summary><p>Yes. Exporting to Markdown and copying to your clipboard is completely free, with no account. Richer formats (PDF, Word, Notion, Obsidian) are coming as an optional Pro upgrade later.</p></details>
+      <details><summary>Is my data private? <span class="pm">+</span></summary><p>Completely. Everything runs locally in your browser — there is no server, no account and no tracking, and we collect zero conversation data. The only network request is a small public config file that helps the exporter keep working when sites change; it contains none of your information.</p></details>
+      <details><summary>Can I export only part of a conversation? <span class="pm">+</span></summary><p>Yes. Open "Select messages" in the popup and tick exactly the turns you want — or export the whole conversation in one click.</p></details>
+      <details><summary>Does it capture the model's reasoning? <span class="pm">+</span></summary><p>When a platform exposes the model's "thinking", you can include it in your export with a single toggle — or leave it out. It's off by default.</p></details>
+      <details><summary>Does it work on Edge and Firefox? <span class="pm">+</span></summary><p>It works on Chrome and Microsoft Edge today. A Firefox version is on the roadmap.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="s">
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>Export your first chat in seconds.</h2>
+      <p>Free, private, and works on the AI tools you already use.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#" id="cta-chrome2">Add to Chrome</a>
+        <a class="btn btn-ghost" href="#" id="cta-edge2">Add to Edge</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="/" style="margin-bottom:14px">
+          <span class="mark"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="2" fill="#fff"/></svg></span>
+          AI Chat Exporter
+        </a>
+        <p class="foot-about">The reliable, private way to save your AI conversations as clean Markdown.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="privacy.html#trademark">Trademarks</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:support@adsit.work">support@adsit.work</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 AI Chat Exporter. All rights reserved.</p>
+      <p>AI Chat Exporter is an independent tool and is not affiliated with, endorsed by, or sponsored by OpenAI, Anthropic, Google, Microsoft, xAI, Perplexity, Mistral AI, Alibaba, Moonshot AI, Z.ai, Meta or DuckDuckGo. All product names, logos and trademarks are the property of their respective owners and are used only to identify the services this tool can export from.</p>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
