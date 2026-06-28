@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>AI Chat Exporter — Store Screenshot Generator</title>
+<style>
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#171520;color:#eee;margin:0;padding:28px 32px}
+  h1{font-size:20px;margin:0 0 6px}
+  p{color:#a09db5;margin:0 0 18px;font-size:14px}
+  .bar{position:sticky;top:0;background:#171520;padding:10px 0 16px;z-index:5}
+  button{font:600 14px system-ui;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;color:#fff;background:linear-gradient(135deg,#6D5EF0,#8B5CF6)}
+  button.sm{background:#2a2740;font-size:12.5px;padding:8px 12px;margin-top:8px}
+  .grid{display:flex;flex-direction:column;gap:26px}
+  .card{background:#201d2c;border:1px solid #2e2b3d;border-radius:14px;padding:16px}
+  .card b{font-size:13px;color:#cfc9f0}
+  .card img{display:block;width:100%;max-width:640px;border-radius:8px;margin:8px 0;border:1px solid #2e2b3d}
+  .hint{font-size:12.5px;color:#7d7a92;margin-top:14px}
+</style>
+</head>
+<body>
+  <h1>AI Chat Exporter — Store Screenshot Generator</h1>
+  <p>Four 1280×800 PNGs, ready for the Chrome / Edge listing. Click <b>Download all</b> (allow multiple downloads if your browser asks), or grab them one at a time.</p>
+  <div class="bar"><button id="all">⬇ Download all 4 PNGs</button></div>
+  <div class="grid" id="grid"></div>
+  <p class="hint">Reusable: edit the <code>slides</code> array in this file to change captions or add Pro-feature slides later.</p>
+
+<script>
+const W=1280,H=800;
+const FONT='Segoe UI, system-ui, -apple-system, Arial, sans-serif';
+
+const DEFS=`<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6D5EF0"/><stop offset="0.55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#A855F7"/></linearGradient>
+<linearGradient id="btn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6D5EF0"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+<filter id="sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="26" stdDeviation="36" flood-color="#241a5c" flood-opacity="0.34"/></filter>
+<filter id="sh2" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#241a5c" flood-opacity="0.20"/></filter>
+</defs>`;
+
+const BG=`<rect width="1280" height="800" fill="url(#bg)"/>
+<ellipse cx="1150" cy="60" rx="540" ry="440" fill="#ffffff" fill-opacity="0.07"/>
+<ellipse cx="110" cy="780" rx="440" ry="380" fill="#1a103f" fill-opacity="0.12"/>
+<rect x="90" y="138" width="218" height="42" rx="21" fill="#ffffff" fill-opacity="0.16"/>
+<text x="111" y="165" font-size="15" font-weight="700" letter-spacing="1.5" fill="#ffffff">AI CHAT EXPORTER</text>`;
+
+function S(inner){return `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" font-family="${FONT}">${DEFS}${BG}${inner}</svg>`;}
+function title(lines,fs,y0){let t='';for(let i=0;i<lines.length;i++)t+=`<text x="88" y="${y0+i*(fs+12)}" font-size="${fs}" font-weight="800" letter-spacing="-1.5" fill="#ffffff">${lines[i]}</text>`;return t;}
+function sub(txt,y){return `<text x="90" y="${y}" font-size="24" fill="#ffffff" fill-opacity="0.9">${txt}</text>`;}
+function cardHead(){return `<rect x="28" y="30" width="34" height="34" rx="10" fill="url(#btn)"/><rect x="37" y="37" width="16" height="20" rx="2.5" fill="#ffffff"/><text x="74" y="53" font-size="18" font-weight="700" fill="#15131f">AI Chat Exporter</text><line x1="28" y1="83" x2="432" y2="83" stroke="#f1f0fb" stroke-width="1.5"/>`;}
+function btns(y){return `<rect x="28" y="${y}" width="195" height="48" rx="12" fill="url(#btn)"/><text x="125" y="${y+30}" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Copy Markdown</text><rect x="237" y="${y}" width="195" height="48" rx="12" fill="#ffffff" stroke="#e8e6f6" stroke-width="1.5"/><text x="334" y="${y+30}" font-size="15" font-weight="700" fill="#15131f" text-anchor="middle">Download .md</text>`;}
+
+// ---- Slide 1: core export ----
+const s1=S(title(['Save any AI chat','as clean Markdown'],58,315)+sub('One click. Code, tables &amp; reasoning preserved.',441)+
+`<g transform="translate(730,250)"><rect width="460" height="300" rx="24" fill="#ffffff" filter="url(#sh)"/>${cardHead()}
+<circle cx="35" cy="117" r="5" fill="#D97757"/><text x="49" y="122" font-size="15" fill="#605d72">Claude — 16 messages found</text>
+${btns(150)}
+<text x="28" y="242" font-size="13.5" fill="#9a97ad">Include reasoning · Select messages · 12 platforms</text></g>`);
+
+// ---- Slide 2: selective export ----
+const rows=[['How do I structure a cover letter?',1],['Can you make it more concise?',1],['Add a closing paragraph',1],['Make the tone a bit warmer',0]];
+let rowSvg='';rows.forEach((r,i)=>{const y=140+i*48;rowSvg+= r[1]
+  ?`<rect x="28" y="${y}" width="22" height="22" rx="6" fill="url(#btn)"/><path d="M33 ${y+11} l4 4 l8 -9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
+  :`<rect x="28" y="${y}" width="22" height="22" rx="6" fill="#fff" stroke="#cfc9f0" stroke-width="1.6"/>`;
+  rowSvg+=`<text x="62" y="${y+16}" font-size="14" fill="#15131f">${r[0]}</text>`;});
+const s2=S(title(['Export exactly','what you want'],58,315)+sub('The whole chat — or just the turns you tick.',441)+
+`<g transform="translate(730,200)"><rect width="460" height="400" rx="24" fill="#ffffff" filter="url(#sh)"/>${cardHead()}
+<text x="28" y="118" font-size="16" font-weight="650" fill="#15131f">Select messages</text><text x="432" y="118" font-size="13" fill="#9a97ad" text-anchor="end">3 of 12</text>
+${rowSvg}${btns(345)}</g>`);
+
+// ---- Slide 3: platforms ----
+const plats=[['ChatGPT','G','#10A37F'],['Claude','C','#D97757'],['Gemini','G','#4285F4'],['DeepSeek','D','#4D6BFE'],['Grok','G','#111111'],['Perplexity','P','#20808D'],['Copilot','C','#0078D4'],['Mistral','M','#FA520F'],['Qwen','Q','#615CED'],['z.ai','Z','#7C3AED'],['Kimi','K','#111111'],['Duck.ai','D','#DE5833']];
+let pills='';plats.forEach((p,i)=>{const c=i%2,r=Math.floor(i/2);const x=700+c*240,y=158+r*72;pills+=`<rect x="${x}" y="${y}" width="222" height="56" rx="15" fill="#ffffff" filter="url(#sh2)"/><rect x="${x+14}" y="${y+14}" width="28" height="28" rx="8" fill="${p[2]}"/><text x="${x+28}" y="${y+33}" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">${p[1]}</text><text x="${x+54}" y="${y+34}" font-size="16" font-weight="600" fill="#15131f">${p[0]}</text>`;});
+const s3=S(title(['12+ AI platforms,','one extension'],58,330)+sub('ChatGPT, Claude, Gemini — and 9 more.',456)+pills);
+
+// ---- Slide 4: privacy ----
+const shield=`<g transform="translate(820,150)"><path d="M130 20 L210 52 L210 112 C210 178 168 210 130 230 C92 210 50 178 50 112 L50 52 Z" fill="url(#btn)" filter="url(#sh)"/><path d="M96 122 l24 26 l46 -56" stroke="#fff" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+const pr=['No server, no account','No analytics, no tracking','Zero conversation data stored','Everything runs in your browser'];
+let prRows='';pr.forEach((t,i)=>{const y=430+i*52;prRows+=`<circle cx="800" cy="${y-5}" r="14" fill="#ffffff" fill-opacity="0.18"/><path d="M793 ${y-5} l5 5 l9 -11" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="828" y="${y}" font-size="22" fill="#ffffff">${t}</text>`;});
+const s4=S(title(['100% private —','nothing leaves','your browser.'],50,250)+sub('No tracking. No uploads. Ever.',424)+shield+prRows);
+
+const slides=[
+  {name:'aix-screenshot-1.png',svg:s1},
+  {name:'aix-screenshot-2.png',svg:s2},
+  {name:'aix-screenshot-3.png',svg:s3},
+  {name:'aix-screenshot-4.png',svg:s4},
+];
+
+function rasterize(svg){return new Promise((res,rej)=>{const b=new Blob([svg],{type:'image/svg+xml'});const u=URL.createObjectURL(b);const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=W;c.height=H;c.getContext('2d').drawImage(im,0,0,W,H);c.toBlob(pb=>{URL.revokeObjectURL(u);res(pb);},'image/png');};im.onerror=rej;im.src=u;});}
+async function download(s){const pb=await rasterize(s.svg);const a=document.createElement('a');a.href=URL.createObjectURL(pb);a.download=s.name;document.body.appendChild(a);a.click();a.remove();}
+
+const grid=document.getElementById('grid');
+slides.forEach(s=>{const d=document.createElement('div');d.className='card';d.innerHTML='<b>'+s.name+' — 1280×800</b><img src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s.svg)+'">';const b=document.createElement('button');b.className='sm';b.textContent='Download '+s.name;b.onclick=()=>download(s);d.appendChild(b);grid.appendChild(d);});
+document.getElementById('all').onclick=async()=>{for(const s of slides){await download(s);await new Promise(r=>setTimeout(r,500));}};
+</script>
+</body>
+</html>
