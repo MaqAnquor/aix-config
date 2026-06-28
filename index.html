@@ -66,8 +66,13 @@
   @media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:38px}.hero-art{order:-1}}
 
   /* POPUP MOCKUP */
-  .hero-art{display:flex;justify-content:center}
-  .popup{width:330px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;transform:rotate(.5deg)}
+  .hero-art{position:relative;display:flex;justify-content:center;align-items:center;min-height:440px}
+  .chatbg{position:absolute;top:14px;left:8px;width:284px;height:362px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:20px;overflow:hidden;transform:rotate(-4deg);z-index:1}
+  .chatbg .bub{max-width:80%;padding:9px 12px;border-radius:13px;font-size:12px;line-height:1.4;margin-bottom:10px}
+  .chatbg .bub.u{background:var(--soft);border:1px solid var(--line);margin-left:auto;color:var(--ink)}
+  .chatbg .bub.a{background:#fbfaff;border:1px solid var(--line);color:var(--muted)}
+  .popup{position:relative;z-index:2;width:350px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);overflow:hidden;transform:rotate(1.2deg)}
+  @media(max-width:480px){.chatbg{display:none}}
   .popup .top{display:flex;align-items:center;gap:9px;padding:15px 17px;border-bottom:1px solid var(--soft-2)}
   .popup .top .mk{width:26px;height:26px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center}
   .popup .top .mk svg{width:15px;height:15px}
@@ -90,11 +95,12 @@
   .pbtns .b2{background:#fff;border:1px solid var(--line);color:var(--ink)}
 
   /* STRIP */
-  .strip{padding:30px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--soft)}
-  .strip .lab{text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
-  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-  .chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14px;font-weight:600}
-  .chip i{width:18px;height:18px;border-radius:6px;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .strip{padding:48px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--soft)}
+  .strip .lab{text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:26px}
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;max-width:900px;margin:0 auto}
+  .pcard{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 15px;font-size:15px;font-weight:600;box-shadow:0 8px 20px -14px rgba(60,40,160,.4);transition:transform .15s ease,box-shadow .15s ease}
+  .pcard:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+  .pcard i{width:30px;height:30px;border-radius:9px;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
 
   /* SECTIONS */
   section.s{padding:80px 0}
@@ -137,6 +143,8 @@
   .plist li{display:flex;align-items:flex-start;gap:11px;font-size:15px;color:#eceaf7}
   .plist .ck{width:22px;height:22px;border-radius:7px;background:rgba(168,85,247,.22);color:#c9a8ff;flex:none;display:flex;align-items:center;justify-content:center}
   .plist .ck svg{width:13px;height:13px}
+  .pshield{width:62px;height:62px;border-radius:17px;background:linear-gradient(135deg,rgba(168,85,247,.32),rgba(99,102,241,.32));border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+  .pshield svg{width:32px;height:32px;color:#fff}
 
   /* FAQ */
   .faq{max-width:760px;margin:0 auto}
@@ -260,6 +268,12 @@
       </div>
     </div>
     <div class="hero-art">
+      <div class="chatbg" aria-hidden="true">
+        <div class="bub u">How do I structure a cover letter?</div>
+        <div class="bub a">A strong cover letter has four parts: a hook, why you're a fit, the proof, and a confident close…</div>
+        <div class="bub u">Make it more concise?</div>
+        <div class="bub a">Sure — here's a tighter version that keeps the key points…</div>
+      </div>
       <div class="popup">
         <div class="top"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="2" fill="#fff"/></svg></span><b>AI Chat Exporter</b></div>
         <div class="body">
@@ -282,19 +296,19 @@
 <div class="strip" id="platforms">
   <div class="wrap">
     <div class="lab">Works with your favourite AI chats</div>
-    <div class="chips">
-      <span class="chip"><i style="background:#10A37F">G</i>ChatGPT</span>
-      <span class="chip"><i style="background:#D97757">C</i>Claude</span>
-      <span class="chip"><i style="background:#4285F4">G</i>Gemini</span>
-      <span class="chip"><i style="background:#4D6BFE">D</i>DeepSeek</span>
-      <span class="chip"><i style="background:#111">G</i>Grok</span>
-      <span class="chip"><i style="background:#20808D">P</i>Perplexity</span>
-      <span class="chip"><i style="background:#0078D4">C</i>Copilot</span>
-      <span class="chip"><i style="background:#FA520F">M</i>Mistral</span>
-      <span class="chip"><i style="background:#615CED">Q</i>Qwen</span>
-      <span class="chip"><i style="background:#7C3AED">Z</i>z.ai</span>
-      <span class="chip"><i style="background:#111">K</i>Kimi</span>
-      <span class="chip"><i style="background:#DE5833">D</i>Duck.ai</span>
+    <div class="pgrid">
+      <div class="pcard"><i style="background:#10A37F">G</i>ChatGPT</div>
+      <div class="pcard"><i style="background:#D97757">C</i>Claude</div>
+      <div class="pcard"><i style="background:#4285F4">G</i>Gemini</div>
+      <div class="pcard"><i style="background:#4D6BFE">D</i>DeepSeek</div>
+      <div class="pcard"><i style="background:#111">G</i>Grok</div>
+      <div class="pcard"><i style="background:#20808D">P</i>Perplexity</div>
+      <div class="pcard"><i style="background:#0078D4">C</i>Copilot</div>
+      <div class="pcard"><i style="background:#FA520F">M</i>Mistral</div>
+      <div class="pcard"><i style="background:#615CED">Q</i>Qwen</div>
+      <div class="pcard"><i style="background:#7C3AED">Z</i>z.ai</div>
+      <div class="pcard"><i style="background:#111">K</i>Kimi</div>
+      <div class="pcard"><i style="background:#DE5833">D</i>Duck.ai</div>
     </div>
   </div>
 </div>
@@ -399,6 +413,7 @@
     <div class="privacy">
       <div class="in">
         <div>
+          <div class="pshield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
           <span class="eyebrow" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#d6c9ff">Privacy by design</span>
           <h2 style="margin-top:14px">Your conversations never leave your browser.</h2>
           <p>Other exporters upload your chats to "process" them. We don't — and we can't. There's no server to send anything to. The reading, the formatting, the file: all of it happens locally on your machine.</p>
