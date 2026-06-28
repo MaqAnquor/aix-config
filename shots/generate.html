@@ -88,9 +88,16 @@ const slides=[
 function rasterize(svg){return new Promise((res,rej)=>{const b=new Blob([svg],{type:'image/svg+xml'});const u=URL.createObjectURL(b);const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=W;c.height=H;c.getContext('2d').drawImage(im,0,0,W,H);c.toBlob(pb=>{URL.revokeObjectURL(u);res(pb);},'image/png');};im.onerror=rej;im.src=u;});}
 async function download(s){const pb=await rasterize(s.svg);const a=document.createElement('a');a.href=URL.createObjectURL(pb);a.download=s.name;document.body.appendChild(a);a.click();a.remove();}
 
-const grid=document.getElementById('grid');
-slides.forEach(s=>{const d=document.createElement('div');d.className='card';d.innerHTML='<b>'+s.name+' — 1280×800</b><img src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s.svg)+'">';const b=document.createElement('button');b.className='sm';b.textContent='Download '+s.name;b.onclick=()=>download(s);d.appendChild(b);grid.appendChild(d);});
-document.getElementById('all').onclick=async()=>{for(const s of slides){await download(s);await new Promise(r=>setTimeout(r,500));}};
+const params=new URLSearchParams(location.search);
+if(params.has('one')){
+  const n=Math.max(1,Math.min(slides.length,parseInt(params.get('one'),10)||1));
+  document.body.innerHTML='<p style="color:#a09db5">Saving '+slides[n-1].name+' …</p>';
+  download(slides[n-1]).then(()=>{document.body.innerHTML='<p style="color:#8fdca8">✓ Saved '+slides[n-1].name+'</p>';});
+} else {
+  const grid=document.getElementById('grid');
+  slides.forEach(s=>{const d=document.createElement('div');d.className='card';d.innerHTML='<b>'+s.name+' — 1280×800</b><img src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s.svg)+'">';const b=document.createElement('button');b.className='sm';b.textContent='Download '+s.name;b.onclick=()=>download(s);d.appendChild(b);grid.appendChild(d);});
+  document.getElementById('all').onclick=async()=>{for(const s of slides){await download(s);await new Promise(r=>setTimeout(r,500));}};
+}
 </script>
 </body>
 </html>
