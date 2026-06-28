@@ -171,6 +171,9 @@
   .support{max-width:860px;margin:18px auto 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
   .support span{color:var(--muted);font-size:14.5px}
   .support .btn{flex:none}
+  .bill-toggle{display:inline-flex;background:var(--soft-2);border:1px solid var(--line);border-radius:999px;padding:3px;margin:8px 0 14px;gap:2px}
+  .bill-toggle .bt{border:none;background:transparent;padding:7px 14px;border-radius:999px;font-size:12.5px;font-weight:650;color:var(--muted);cursor:pointer;transition:background .15s,color .15s}
+  .bill-toggle .bt.active{background:#fff;color:var(--brand);box-shadow:0 1px 3px rgba(20,18,40,.10)}
 
   /* FOOTER */
   footer{border-top:1px solid var(--line);padding:50px 0 40px;margin-top:30px}
@@ -365,8 +368,13 @@
       <div class="plan pro">
         <span class="badge">Most popular</span>
         <div class="pname">Pro</div>
-        <div class="price">$24 <small>/ year</small></div>
-        <div class="note">≈ $2/mo, billed yearly · also $3.99/mo or $59 lifetime · launching soon</div>
+        <div class="bill-toggle" role="tablist" aria-label="Billing period">
+          <button class="bt" data-plan="monthly">Monthly</button>
+          <button class="bt active" data-plan="annual">Annual</button>
+          <button class="bt" data-plan="lifetime">Lifetime</button>
+        </div>
+        <div class="price"><span id="proPrice">$24</span> <small id="proPeriod">/ year</small></div>
+        <div class="note" id="proNote">≈ $2/mo · save 50% vs monthly · launching soon</div>
         <ul>
           <li><span class="ck">✓</span> Everything in Free</li>
           <li><span class="ck">✓</span> Export to PDF &amp; Word (.docx)</li>
@@ -472,5 +480,25 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var plans={
+    monthly:{price:"$3.99",period:"/ month",note:"Billed monthly · cancel anytime · launching soon"},
+    annual:{price:"$24",period:"/ year",note:"≈ $2/mo · save 50% vs monthly · launching soon"},
+    lifetime:{price:"$59",period:"one-time",note:"Pay once, yours forever · launching soon"}
+  };
+  var btns=document.querySelectorAll('.bill-toggle .bt');
+  for(var i=0;i<btns.length;i++){
+    btns[i].addEventListener('click',function(){
+      for(var j=0;j<btns.length;j++)btns[j].classList.remove('active');
+      this.classList.add('active');
+      var p=plans[this.getAttribute('data-plan')];
+      document.getElementById('proPrice').textContent=p.price;
+      document.getElementById('proPeriod').textContent=p.period;
+      document.getElementById('proNote').textContent=p.note;
+    });
+  }
+})();
+</script>
 </body>
 </html>
